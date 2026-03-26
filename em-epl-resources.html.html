@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Emergency Medicine EPL and PUL Resources</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<style>
+  :root {
+    --cream: #F7F3ED;
+    --warm-white: #FBF8F4;
+    --sand: #E8DDD0;
+    --tan: #C9B99A;
+    --rust: #9B5E3A;
+    --rust-dark: #7A4628;
+    --brown: #4A3728;
+    --text: #2C1F14;
+    --text-muted: #7A6555;
+    --border: #DDD0C0;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background-color: var(--cream);
+    color: var(--text);
+    font-family: 'Source Serif 4', Georgia, serif;
+    min-height: 100vh;
+    padding: 0;
+  }
+
+  /* Texture overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .container {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 60px 24px 80px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Header */
+  .header {
+    text-align: center;
+    margin-bottom: 56px;
+    animation: fadeDown 0.7s ease both;
+  }
+
+  .header-tag {
+    display: inline-block;
+    font-family: 'Source Serif 4', serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--rust);
+    background: rgba(155, 94, 58, 0.1);
+    border: 1px solid rgba(155, 94, 58, 0.25);
+    padding: 5px 14px;
+    border-radius: 2px;
+    margin-bottom: 20px;
+  }
+
+  h1 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: clamp(26px, 5vw, 38px);
+    font-weight: 700;
+    color: var(--brown);
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    margin-bottom: 16px;
+  }
+
+  .subtitle {
+    font-size: 15px;
+    color: var(--text-muted);
+    font-style: italic;
+    font-weight: 300;
+    line-height: 1.6;
+  }
+
+  .divider {
+    width: 48px;
+    height: 2px;
+    background: linear-gradient(90deg, var(--rust), var(--tan));
+    margin: 20px auto 0;
+    border-radius: 2px;
+  }
+
+  /* Resource Cards */
+  .resources {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin-bottom: 52px;
+  }
+
+  .card {
+    background: var(--warm-white);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+    text-decoration: none;
+    display: flex;
+    align-items: stretch;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+    animation: fadeUp 0.6s ease both;
+    box-shadow: 0 1px 3px rgba(44,31,20,0.06);
+  }
+
+  .card:nth-child(1) { animation-delay: 0.1s; }
+  .card:nth-child(2) { animation-delay: 0.18s; }
+  .card:nth-child(3) { animation-delay: 0.26s; }
+  .card:nth-child(4) { animation-delay: 0.34s; }
+  .card:nth-child(5) { animation-delay: 0.42s; }
+
+  .card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(44,31,20,0.1);
+    border-color: var(--tan);
+  }
+
+  .card-accent {
+    width: 5px;
+    flex-shrink: 0;
+    background: linear-gradient(180deg, var(--rust), var(--tan));
+  }
+
+  .card-body {
+    padding: 18px 20px;
+    flex: 1;
+  }
+
+  .card-category {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--rust);
+    margin-bottom: 5px;
+  }
+
+  .card-title {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--brown);
+    line-height: 1.35;
+    margin-bottom: 5px;
+  }
+
+  .card-desc {
+    font-size: 13px;
+    color: var(--text-muted);
+    font-weight: 300;
+    line-height: 1.5;
+  }
+
+  .card-arrow {
+    display: flex;
+    align-items: center;
+    padding: 0 18px 0 8px;
+    color: var(--tan);
+    font-size: 18px;
+    transition: color 0.2s, transform 0.2s;
+    flex-shrink: 0;
+  }
+
+  .card:hover .card-arrow {
+    color: var(--rust);
+    transform: translateX(3px);
+  }
+
+  /* QR Section */
+  .qr-section {
+    background: var(--warm-white);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 36px 32px;
+    text-align: center;
+    animation: fadeUp 0.6s 0.5s ease both;
+    box-shadow: 0 1px 3px rgba(44,31,20,0.06);
+  }
+
+  .qr-section h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    color: var(--brown);
+    margin-bottom: 8px;
+  }
+
+  .qr-section p {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-bottom: 24px;
+    font-style: italic;
+    font-weight: 300;
+  }
+
+  #qr-code {
+    display: inline-block;
+    padding: 14px;
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    margin-bottom: 20px;
+  }
+
+  #qr-code img, #qr-code canvas {
+    display: block;
+  }
+
+  .qr-url-input {
+    width: 100%;
+    padding: 11px 14px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    background: var(--cream);
+    font-family: 'Source Serif 4', serif;
+    font-size: 13px;
+    color: var(--text);
+    margin-bottom: 10px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .qr-url-input:focus {
+    border-color: var(--tan);
+  }
+
+  .qr-hint {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: 14px;
+    font-style: italic;
+  }
+
+  .btn-download {
+    display: inline-block;
+    margin-top: 4px;
+    background: var(--rust);
+    color: white;
+    border: none;
+    padding: 10px 24px;
+    border-radius: 5px;
+    font-family: 'Source Serif 4', serif;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    letter-spacing: 0.04em;
+    transition: background 0.2s;
+  }
+
+  .btn-download:hover {
+    background: var(--rust-dark);
+  }
+
+  /* Footer */
+  .footer {
+    text-align: center;
+    margin-top: 48px;
+    font-size: 12px;
+    color: var(--tan);
+    letter-spacing: 0.05em;
+  }
+
+  @keyframes fadeDown {
+    from { opacity: 0; transform: translateY(-16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(14px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (max-width: 480px) {
+    .container { padding: 40px 16px 60px; }
+    .qr-section { padding: 28px 20px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="header">
+    <div class="header-tag">Clinical Reference</div>
+    <h1>Emergency Medicine EPL and PUL Resources</h1>
+    <p class="subtitle">Curated guidelines & training for early pregnancy loss<br>and pregnancy of unknown location in the ED</p>
+    <div class="divider"></div>
+  </div>
+
+  <div class="resources">
+
+    <a class="card" href="https://bridgetotreatment.org/wp-content/uploads/ACCESS_BRIDGE_-PROTOCOL_Ectopic_Pregnancy_in_the_ED_Restricted.pdf" target="_blank" rel="noopener">
+      <div class="card-accent"></div>
+      <div class="card-body">
+        <div class="card-category">Protocol · PDF</div>
+        <div class="card-title">Ectopic Pregnancy in the ED — ACCESS Bridge Protocol</div>
+        <div class="card-desc">Clinical protocol for ED-based ectopic pregnancy management</div>
+      </div>
+      <div class="card-arrow">→</div>
+    </a>
+
+    <a class="card" href="https://bridgetotreatment.org/resource/ed-management-of-early-pregnancy-loss/" target="_blank" rel="noopener">
+      <div class="card-accent"></div>
+      <div class="card-body">
+        <div class="card-category">Resource · Bridge to Treatment</div>
+        <div class="card-title">ED Management of Early Pregnancy Loss</div>
+        <div class="card-desc">Practical guidance for EPL management in the emergency department</div>
+      </div>
+      <div class="card-arrow">→</div>
+    </a>
+
+    <a class="card" href="https://www.acog.org/clinical/clinical-guidance/practice-bulletin/articles/2018/11/early-pregnancy-loss" target="_blank" rel="noopener">
+      <div class="card-accent"></div>
+      <div class="card-body">
+        <div class="card-category">Guideline · ACOG Practice Bulletin</div>
+        <div class="card-title">ACOG Practice Bulletin: Early Pregnancy Loss</div>
+        <div class="card-desc">ACOG's official clinical guidance on diagnosis and management of EPL</div>
+      </div>
+      <div class="card-arrow">→</div>
+    </a>
+
+    <a class="card" href="https://courses.feminem.org/products/courses/epl" target="_blank" rel="noopener">
+      <div class="card-accent"></div>
+      <div class="card-body">
+        <div class="card-category">Course · FEMINEM</div>
+        <div class="card-title">EPL Course — FEMINEM</div>
+        <div class="card-desc">Online CME course on early pregnancy loss for emergency providers</div>
+      </div>
+      <div class="card-arrow">→</div>
+    </a>
+
+    <a class="card" href="https://courses.feminem.org/" target="_blank" rel="noopener">
+      <div class="card-accent"></div>
+      <div class="card-body">
+        <div class="card-category">Platform · FEMINEM</div>
+        <div class="card-title">FEMINEM Course Library</div>
+        <div class="card-desc">Full catalog of reproductive health courses for emergency medicine</div>
+      </div>
+      <div class="card-arrow">→</div>
+    </a>
+
+  </div>
+
+  <!-- QR Code Generator -->
+  <div class="qr-section">
+    <h2>Generate a QR Code</h2>
+    <p>Paste the URL where you host this page to create a scannable QR code</p>
+    <div id="qr-code"></div>
+    <input class="qr-url-input" type="text" id="url-input" placeholder="https://your-hosted-page-url.com" />
+    <br>
+    <button class="btn-download" onclick="downloadQR()">Download QR Code</button>
+    <div class="qr-hint">Host this HTML file (e.g. on GitHub Pages or any web server), then paste that URL above</div>
+  </div>
+
+  <div class="footer">Emergency Medicine · EPL &amp; PUL · Clinical Resources</div>
+
+</div>
+
+<script>
+  let qrInstance = null;
+
+  function generateQR(url) {
+    const container = document.getElementById('qr-code');
+    container.innerHTML = '';
+    if (!url) return;
+    qrInstance = new QRCode(container, {
+      text: url,
+      width: 180,
+      height: 180,
+      colorDark: '#4A3728',
+      colorLight: '#ffffff',
+      correctLevel: QRCode.CorrectLevel.M
+    });
+  }
+
+  function downloadQR() {
+    const canvas = document.querySelector('#qr-code canvas');
+    if (!canvas) { alert('Enter a URL first to generate a QR code.'); return; }
+    const link = document.createElement('a');
+    link.download = 'em-epl-resources-qr.png';
+    link.href = canvas.toDataURL('image/png');
+    link.click();
+  }
+
+  let debounceTimer;
+  document.getElementById('url-input').addEventListener('input', function() {
+    clearTimeout(debounceTimer);
+    debounceTimer = setTimeout(() => generateQR(this.value.trim()), 400);
+  });
+</script>
+</body>
+</html>
